@@ -1,5 +1,6 @@
 package com.example.anggarisky.photoemptystatesapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
         btnaddphoto = findViewById(R.id.btnaddphoto);
         btnaddphoto.setPaintFlags(btnaddphoto.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        // give an event to next act
+        btnaddphoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(MainActivity.this,PhotoCateAct.class);
+                startActivity(a);
+            }
+        });
 
         titlepage = findViewById(R.id.titlepage);
         subtitlepage = findViewById(R.id.subtitlepage);
