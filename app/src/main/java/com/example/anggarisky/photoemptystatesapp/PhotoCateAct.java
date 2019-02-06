@@ -1,5 +1,6 @@
 package com.example.anggarisky.photoemptystatesapp;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,14 @@ public class PhotoCateAct extends AppCompatActivity {
 
         btnsavecate = findViewById(R.id.btnsavecate);
         btt = AnimationUtils.loadAnimation(this, R.anim.btt);
+
+        btnsavecate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(PhotoCateAct.this,ChooseUserNameAct.class);
+                startActivity(a);
+            }
+        });
 
         catesList = new ArrayList<>();
         catesList.add(

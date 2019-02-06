@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhotoCateAct"></activity>
+        <activity android:name=".PhotoCateAct" />
+        <activity android:name=".ChooseUserNameAct"></activity>
     </application>
 
 </manifest>
