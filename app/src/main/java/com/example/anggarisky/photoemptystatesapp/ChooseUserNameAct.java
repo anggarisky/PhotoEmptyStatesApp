@@ -1,5 +1,6 @@
 package com.example.anggarisky.photoemptystatesapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,7 +56,8 @@ public class ChooseUserNameAct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Ok Done", Toast.LENGTH_SHORT).show();
 
                         // pass into another activity
-                        
+                        Intent a = new Intent(ChooseUserNameAct.this,AddPhotoAct.class);
+                        startActivity(a);
                     }
 
                     @Override

@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PhotoCateAct" />
-        <activity android:name=".ChooseUserNameAct"></activity>
+        <activity android:name=".ChooseUserNameAct" />
+        <activity android:name=".AddPhotoAct"></activity>
     </application>
 
 </manifest>
