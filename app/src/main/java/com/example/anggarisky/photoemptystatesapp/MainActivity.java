@@ -1,6 +1,7 @@
 package com.example.anggarisky.photoemptystatesapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         btt = AnimationUtils.loadAnimation(this, R.anim.btt);
         bttwo = AnimationUtils.loadAnimation(this, R.anim.bttwo);
@@ -108,4 +112,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

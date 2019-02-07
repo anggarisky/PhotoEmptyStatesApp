@@ -1,6 +1,7 @@
 package com.example.anggarisky.photoemptystatesapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,21 +34,23 @@ public class PhotoCateAct extends AppCompatActivity {
     Button btnsavecate;
     Animation btt;
 
+    // add username local
+    String USER_NAME_STORY = "usernamestory";
+    String userNameStoryLocal = "";
+    String userNameStoryNew = "";
+
+    // setting for database
+    DatabaseReference reference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_cate);
 
+        loadDataUsernameLocal();
+
         btnsavecate = findViewById(R.id.btnsavecate);
         btt = AnimationUtils.loadAnimation(this, R.anim.btt);
-
-        btnsavecate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent a = new Intent(PhotoCateAct.this,ChooseUserNameAct.class);
-                startActivity(a);
-            }
-        });
 
         catesList = new ArrayList<>();
         catesList.add(
@@ -116,6 +125,9 @@ public class PhotoCateAct extends AppCompatActivity {
             }
         }, 100);
 
+        reference = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(userNameStoryNew);
+
         myCateList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -127,14 +139,40 @@ public class PhotoCateAct extends AppCompatActivity {
                     int pos = linearLayoutManager.getPosition(view);
 
                     RecyclerView.ViewHolder viewHolder = myCateList.findViewHolderForAdapterPosition(pos);
+
                     ImageView imageView = viewHolder.itemView.findViewById(R.id.iconimg);
                     imageView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(100).start();
 
-                    TextView icontitle = viewHolder.itemView.findViewById(R.id.icontitle);
+                    final TextView icontitle = viewHolder.itemView.findViewById(R.id.icontitle);
                     icontitle.animate().alpha(1).setDuration(100).start();
 
                     btnsavecate.setAlpha(1);
                     btnsavecate.startAnimation(btt);
+
+                    btnsavecate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // save category to database firebase
+                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // get string from current category
+                                    String storycate = icontitle.getText().toString();
+
+                                    // save to Firebase
+                                    reference.getRef().child("category").setValue(storycate);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            Intent a = new Intent(PhotoCateAct.this,ChooseUserNameAct.class);
+                            startActivity(a);
+                        }
+                    });
 
                 } else {
 
@@ -159,4 +197,10 @@ public class PhotoCateAct extends AppCompatActivity {
         });
 
     }
+
+    public void loadDataUsernameLocal() {
+        SharedPreferences sharedPreferences = getSharedPreferences(USER_NAME_STORY, MODE_PRIVATE);
+        userNameStoryNew = sharedPreferences.getString(userNameStoryLocal, "");
+    }
+
 }

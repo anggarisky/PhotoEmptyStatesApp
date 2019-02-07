@@ -24,11 +24,15 @@ public class ChooseUserNameAct extends AppCompatActivity {
 
     String USER_NAME_STORY = "usernamestory";
     String userNameStoryLocal = "";
+    String userNameStoryNew = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_user_name);
+
+        loadDataUsernameLocal();
+        checkUsernameLocal();
 
         userNameStory = findViewById(R.id.userNameStory);
         btnsaveusername = findViewById(R.id.btnsaveusername);
@@ -69,4 +73,20 @@ public class ChooseUserNameAct extends AppCompatActivity {
         });
 
     }
+
+    public void loadDataUsernameLocal() {
+        SharedPreferences sharedPreferences = getSharedPreferences(USER_NAME_STORY, MODE_PRIVATE);
+        userNameStoryNew = sharedPreferences.getString(userNameStoryLocal, "");
+    }
+
+    public void checkUsernameLocal(){
+        if(userNameStoryNew.isEmpty()){
+            // if the username is not available
+        }
+        else {
+            Intent a = new Intent(ChooseUserNameAct.this,AddPhotoAct.class);
+            startActivity(a);
+        }
+    }
+
 }
